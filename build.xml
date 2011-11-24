@@ -1,0 +1,36 @@
+<project name="jboss-modules-ant-task" default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
+	
+	<property name="build.dir" value="build/ant" />
+	<property name="src.dir" value="src/main/java" />
+	<property name="jar.name" value="jboss-modules-ant-tasks.jar" />
+	<property name="debug" value="false" />
+	<property name="fork.javac" value="false" />
+	
+	<target name="prepare">
+		<mkdir dir="${build.dir}" />
+		<ivy:resolve />
+		<ivy:cachepath pathid="ivy.build.path" />
+	</target>
+	
+	<target name="compile" depends="prepare">
+		<javac srcdir="${src.dir}"
+		       destdir="${build.dir}"
+		       debug="${debug}"
+			   includeantruntime="false"
+			   fork="${fork.javac}">
+			<classpath refid="ivy.build.path"/>
+			<include name="**/*.java" />
+		</javac>
+	</target>
+	
+	<target name="build" depends="compile">
+		<jar jarfile="${build.dir}/${jar.name}">
+			<fileset dir="${build.dir}" includes="**" excludes="*.jar" />
+			<fileset dir="${src.dir}" includes="**/antlib.xml" />
+		</jar>
+	</target>
+	
+	<target name="deploy" depends="build">
+		<copy file="${build.dir}/${jar.name}" todir="/Users/david/.ant/lib" />
+	</target>
+</project>

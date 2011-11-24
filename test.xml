@@ -1,0 +1,17 @@
+<project name="jboss-modules-test" default="test">
+
+	<taskdef resource="com/osi/antlib.xml" />
+	<property name="jboss.home" value="/Volumes/obZen/java/jboss-as-7.0.2.Final" />
+
+	<target name="test">
+		<modules todir="./modules" overwrite="true">
+			<module name="com.osi.foo" slot="1.0" dir="/Users/david/.ivy2/cache/com.oracle/ojdbc6/jars">
+				<include name="*.jar" />
+				<dependency name="com.osi.bar" export="true" optional="true" />
+			</module>
+			<module name="com.osi.bar" dir="/Users/david/.ivy2/cache/se.scalablesolutions.akka/akka-actor/jars" includes="akka-actor-1.2.jar">
+				<dependency name="com.osi.foo" slot="1.0" export="true" optional="true" />
+			</module>
+		</modules>
+	</target>
+</project>

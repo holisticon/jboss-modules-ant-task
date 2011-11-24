@@ -1,0 +1,18 @@
+<!--
+	I can make this kind of like a fileset.
+	We can include a dir attribute on the modules task, and
+	each nested module can reference files relative to that
+	dir. Or if the dir attribute is left off, then each
+	nested module becomes a fileset.
+-->
+
+<jboss:modules todir="${jboss.home}/modules" overwrite="true">
+	
+	<!-- Extends Fileset -->
+	<module name="com.osi" slot="main">
+		<includes name="NxAPI.jar" />
+		<dependency name="" slot="" export="" optional="" />
+		<dependency name="" slot="" export="" optional="" />
+	</module>
+		
+</jboss:modules>
