@@ -17,7 +17,7 @@ import com.osi.ant.types.JBossModule;
 
 public class JBossModules extends Task {
 	
-	private File destDir;
+	private File toDir;
 	private boolean overwrite = true;
 	private List<JBossModule> moduleList = new ArrayList<JBossModule>();
 	
@@ -32,20 +32,20 @@ public class JBossModules extends Task {
 	}
 
 	private void checkOutputDirectory() {
-		if (destDir == null) {
+		if (toDir == null) {
 			throw new BuildException("Must specify the todir attribute");
 		}
-		if (!destDir.exists()) {
-			log("Creating destination dir: " + destDir);
-			destDir.mkdirs();
+		if (!toDir.exists()) {
+			log("Creating destination dir: " + toDir);
+			toDir.mkdirs();
 		} else {
-			log("Using destination dir: " + destDir);
+			log("Using destination dir: " + toDir);
 		}
 	}
 	
 	private void createModule(JBossModule module) {
 		String modulePath = module.getName().replace('.', File.separatorChar);
-		File moduleDir = new File(destDir, modulePath);
+		File moduleDir = new File(toDir, modulePath);
 		moduleDir = new File(moduleDir, module.getSlot());
 		log("Creating module directory: " + moduleDir, Project.MSG_DEBUG);
 		moduleDir.mkdirs();
@@ -81,7 +81,7 @@ public class JBossModules extends Task {
      * @param destDir the destination directory.
      */
     public void setTodir(File destDir) {
-        this.destDir = destDir;
+        this.toDir = destDir;
     }
     
     public void setOverwrite(boolean overwrite) {
