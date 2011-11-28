@@ -30,9 +30,9 @@ The module type is an extension of FileSet and is used to specify one or more mo
 * name: the name of the module. The Ant task will create a directory hierarchy based on the specified dot-separated name. Each segment of the name separated by a dot will be turned into a path element for the module directory.
 * slot: an optional slot name. The slot name is used to differentiate multiple versions of the same module. The slot name is used as the final path name in the directory hierarchy created for the module. If not specified, the slot defaults to main.
 
-Additionally, the Ant task supports specifying dependencies with zero or more nested dependency elements. See the [Descriptor Support](#descriptor) section for more information.
+Additionally, the Ant task supports specifying dependencies with zero or more nested dependency elements. See the Descriptor Support section for more information.
 
-<a id="descriptor"></a>Descriptor Support
+Descriptor Support
 ------------------
 The dependency element is used to specify modules that are dependencies for the module being defined by the module type. It currently supports the following attributes:
 
