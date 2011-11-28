@@ -42,3 +42,9 @@ The dependency element is used to specify modules that are dependencies for the 
 * *optional*: an optional boolean attribute which indicates whether or not the dependency is optional. If this attribute is omitted, it has the effect of making dependency required.
 
 See the [JBoss Modules Descriptor](https://docs.jboss.org/author/display/MODULES/Module+descriptors) documentation for information regarding the format of module descriptors. The Ant task does not currently support any features supported by JBoss Modules that are not explicitly detailed in this document (i.e. main-class).
+
+Installation and Usage
+----------------------
+Releases can be grabbed from the Downloads section of this GitHub repo. The easiest way to install is to drop the file into ~/.ant/lib. To use the task in your build files, use the following taskdef:
+
+`<taskdef resource="com/osi/antlib.xml" />`
