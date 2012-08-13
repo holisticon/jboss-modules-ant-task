@@ -1,3 +1,5 @@
+*NOTE*: I am no longer working at a place that uses JBoss, so I no longer have a need for this and have stopped maintaining it. I'll leave it here in case anyone finds it useful to fork and keep up to date.
+
 JBoss Modules Ant Task
 ======================
 
