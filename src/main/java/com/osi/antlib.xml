@@ -1,3 +1,3 @@
 <antlib>
-	<taskdef name="modules" classname="com.osi.ant.tasks.JBossModules" />
+	<taskdef name="modules" classname="com.osi.ant.tasks.CreateModulesTask" />
 </antlib>

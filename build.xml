@@ -1,36 +1,46 @@
 <project name="jboss-modules-ant-task" default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
-	
-	<property name="build.dir" value="build/ant" />
+
+	<property name="build.dir" value="build/" />
+	<property name="classes.dir" value="build/classes" />
 	<property name="src.dir" value="src/main/java" />
 	<property name="jar.name" value="jboss-modules-ant-tasks.jar" />
 	<property name="debug" value="false" />
 	<property name="fork.javac" value="false" />
-	
+
+	<!--
+	Resolves depenendecies.
+	-->
 	<target name="prepare">
 		<mkdir dir="${build.dir}" />
+		<mkdir dir="${classes.dir}" />
 		<ivy:resolve />
 		<ivy:cachepath pathid="ivy.build.path" />
 	</target>
-	
+
+	<!--
+	Compiles code.
+	-->
 	<target name="compile" depends="prepare">
-		<javac srcdir="${src.dir}"
-		       destdir="${build.dir}"
-		       debug="${debug}"
-			   includeantruntime="false"
-			   fork="${fork.javac}">
-			<classpath refid="ivy.build.path"/>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="${debug}" includeantruntime="false" fork="${fork.javac}">
+			<classpath refid="ivy.build.path" />
 			<include name="**/*.java" />
+			<include name="**/antlib.xml" />
 		</javac>
 	</target>
-	
+
+	<!--
+	Bilds a JAR.
+	-->
 	<target name="build" depends="compile">
 		<jar jarfile="${build.dir}/${jar.name}">
-			<fileset dir="${build.dir}" includes="**" excludes="*.jar" />
-			<fileset dir="${src.dir}" includes="**/antlib.xml" />
+			<fileset dir="${classes.dir}" includes="**" excludes="*.jar" />
 		</jar>
 	</target>
-	
+
+	<!-- 
+	Deploys the JAR to default location where ANt looks for it.
+	-->
 	<target name="deploy" depends="build">
-		<copy file="${build.dir}/${jar.name}" todir="/Users/david/.ant/lib" />
+		<copy file="${build.dir}/${jar.name}" todir="${user.home}/.ant/lib" />
 	</target>
 </project>
