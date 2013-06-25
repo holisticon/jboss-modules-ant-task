@@ -1,0 +1,36 @@
+<project name="examples/ivy" default="generate-modules" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<!-- Define task -->
+	<taskdef resource="com/osi/antlib.xml" />
+	<!-- Own location -->
+	<dirname property="filedir" file="${ant.file.examples/ivy}" />
+
+	<!-- Where to get JARs from -->
+	<property name="repository" value="${user.home}/.ivy2/cache" />
+	<!-- Where to write modules -->
+	<property name="target-dir" value="${filedir}/target/modules" />
+
+	<!-- Clean module -->
+	<target name="clean">
+		<delete failonerror="false">
+			<fileset dir="${target-dir}">
+				<include name="**/*" />
+				<include name="**/*.*" />
+			</fileset>
+		</delete>
+	</target>
+
+	<!-- Generate modules -->
+	<target name="generate-modules" depends="clean">
+
+		<ivy:info property="this" file="ivy.xml" />
+		<ivy:retrieve file="ivy.xml" pattern="target/lib/[artifact]-[revision](-[classifier]).[ext]" type="jar" setid="ivy.build.set" />
+
+		<modules todir="${target-dir}" overwrite="true">
+			<module name="${this.organisation}.${this.module}" slot="${this.revision}">
+				<resourceFileSet refid="ivy.build.set" />
+				<dependency name="com.osi.bar" export="true" optional="true" />
+			</module>
+		</modules>
+	</target>
+</project>

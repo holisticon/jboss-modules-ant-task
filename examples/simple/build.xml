@@ -1,0 +1,39 @@
+<project name="examples/simple" default="generate-modules">
+
+	<!-- Define task -->
+	<taskdef resource="com/osi/antlib.xml" />
+	<!-- Own location -->
+	<dirname property="filedir" file="${ant.file.examples/simple}" />
+
+	<!-- Where to get JARs from -->
+	<property name="repository" value="${user.home}/.ivy2/cache" />
+	<!-- Where to write modules -->
+	<property name="target-dir" value="${filedir}/target/modules" />
+
+	<!-- Clean module -->
+	<target name="clean">
+		<delete failonerror="false">
+			<fileset dir="${target-dir}">
+				<include name="**/*" />
+				<include name="**/*.*" />
+			</fileset>
+		</delete>
+	</target>
+
+	<!-- Generate modules -->
+	<target name="generate-modules" depends="clean">
+
+		<modules todir="${target-dir}" overwrite="true">
+			<module name="de.holisticon.simple" slot="1.0">
+				<resourceFileSet dir="${repository}/aopalliance/aopalliance/jar">
+					<include name="*.jar" />
+				</resourceFileSet>
+				<dependency name="de.holisticon.basic" export="true" optional="true" />
+			</module>
+			<module name="de.holisticon.other">
+				<dependency name="de.holisticon.simple" slot="1.0" export="true" optional="true" />
+			</module>
+		</modules>
+
+	</target>
+</project>

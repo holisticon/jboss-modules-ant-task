@@ -1,2 +1,4 @@
-modules
-build
+target
+examples/ivy/target/*
+examples/simple/target/*
+

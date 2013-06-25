@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info organisation="de.holisticon" module="test-module" revision="1.0" />
+	<publications />
+	<dependencies>
+		<dependency org="org.apache.ant" name="ant" rev="1.8.2" />
+		<dependency org="commons-io" name="commons-io" rev="2.0.1" />
+	</dependencies>
+</ivy-module>

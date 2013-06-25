@@ -1,6 +1,5 @@
 package com.osi.ant.types;
 
-import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +21,6 @@ public class JBossModule {
 
 	private String name;
 	private String slot = MAIN_SLOT;
-	private FileSet fileSet = new FileSet();
 	public final List<JBossModuleDependency> dependencies = new ArrayList<JBossModuleDependency>();
 	public final List<FileSet> includedFilesets = new ArrayList<FileSet>();
 
@@ -47,12 +45,8 @@ public class JBossModule {
 
 	public void generateDescriptor(final PrintStream ps) {
 
-		// add all own
 		final List<String> resources = new ArrayList<String>();
 
-		if (isEmbeddedFileSet()) {
-			resources.addAll(Arrays.asList(this.fileSet.getDirectoryScanner().getIncludedFiles()));
-		}
 		// add all referenced
 		for (FileSet fsRefs : this.includedFilesets) {
 			resources.addAll(Arrays.asList(fsRefs.getDirectoryScanner().getIncludedFiles()));
@@ -71,9 +65,6 @@ public class JBossModule {
 	 * Retrieves true, if the local attribute dir is used.
 	 * @return true if fileset embedded.
 	 */
-	private boolean isEmbeddedFileSet() {
-		return this.fileSet.getDir() != null;
-	}
 
 	/**
 	 * Returns module name property.
@@ -110,38 +101,11 @@ public class JBossModule {
 	}
 
 	/**
-	 * Sets the file set directory.
-	 * @param dir shortcut for including a fileset reference with one directory.
-	 */
-	public void setDir(String dir) {
-		this.fileSet.setDir(new File(dir));
-	}
-
-	/**
-	 * Sets the file set includes.
-	 * @param includes shortcut for including a fileset reference with one directory
-	 */
-	public void setIncludes(String includes) {
-		this.fileSet.setIncludes(includes);
-	}
-
-	/**
-	 * Sets the file set includes.
-	 * @param includes shortcut for including a fileset reference with one directory
-	 */
-	public void setExcludes(String excludes) {
-		this.fileSet.setExcludes(excludes);
-	}
-
-	/**
 	 * Retrieves directory scanners for all configures filesets.
 	 * @return directory scanners.
 	 */
 	public Set<DirectoryScanner> getDirectoryScanners() {
 		final Set<DirectoryScanner> scanners = new HashSet<DirectoryScanner>();
-		if (isEmbeddedFileSet()) {
-			scanners.add(this.fileSet.getDirectoryScanner());
-		}
 
 		for (FileSet subset : this.includedFilesets) {
 			scanners.add(subset.getDirectoryScanner());

@@ -1,7 +1,7 @@
 <project name="jboss-modules-ant-task" default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
 
-	<property name="build.dir" value="build/" />
-	<property name="classes.dir" value="build/classes" />
+	<property name="build.dir" value="target/" />
+	<property name="classes.dir" value="target/classes" />
 	<property name="src.dir" value="src/main/java" />
 	<property name="jar.name" value="jboss-modules-ant-tasks.jar" />
 	<property name="debug" value="false" />
@@ -26,10 +26,15 @@
 			<include name="**/*.java" />
 			<include name="**/antlib.xml" />
 		</javac>
+		<copy todir="${classes.dir}">
+			<fileset dir="${src.dir}">
+				<include name="**/antlib.xml"/>
+			</fileset>
+		</copy>
 	</target>
 
 	<!--
-	Bilds a JAR.
+	Builds a JAR.
 	-->
 	<target name="build" depends="compile">
 		<jar jarfile="${build.dir}/${jar.name}">
@@ -38,7 +43,7 @@
 	</target>
 
 	<!-- 
-	Deploys the JAR to default location where ANt looks for it.
+	Deploys the JAR to default location where Ant looks for it.
 	-->
 	<target name="deploy" depends="build">
 		<copy file="${build.dir}/${jar.name}" todir="${user.home}/.ant/lib" />
