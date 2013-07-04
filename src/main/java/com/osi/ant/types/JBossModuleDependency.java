@@ -4,6 +4,7 @@ import org.apache.tools.ant.BuildException;
 
 /**
  * Represents a module dependency on another module.
+ * 
  * @author Simon Zambrovski
  * @author David Hosier
  */
@@ -40,9 +41,18 @@ public class JBossModuleDependency {
 	public JBossModuleDependency() {
 	}
 
+	public JBossModuleDependency(final String name, final String slot) {
+		setName(name);
+		if (!JBossModule.MAIN_SLOT.equals(slot)) {
+			setSlot(slot);
+		}
+	}
+
 	/**
 	 * Sets module name.
-	 * @param name name to set.
+	 * 
+	 * @param name
+	 *            name to set.
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -50,7 +60,9 @@ public class JBossModuleDependency {
 
 	/**
 	 * Sets module slot.
-	 * @param slot slot to set.
+	 * 
+	 * @param slot
+	 *            slot to set.
 	 */
 	public void setSlot(String slot) {
 		this.slot = slot;
@@ -58,7 +70,8 @@ public class JBossModuleDependency {
 
 	/**
 	 * Sets if the module exports.
-	 * @param export 
+	 * 
+	 * @param export
 	 */
 	public void setExport(boolean export) {
 		this.export = export;
@@ -66,6 +79,7 @@ public class JBossModuleDependency {
 
 	/**
 	 * Sets if the module is optional.
+	 * 
 	 * @param optional
 	 */
 	public void setOptional(boolean optional) {
@@ -74,20 +88,21 @@ public class JBossModuleDependency {
 
 	/**
 	 * Sets services.
-	 * @param services none, import or export.
+	 * 
+	 * @param services
+	 *            none, import or export.
 	 */
 	public void setServices(String services) {
 		final Services value = Services.byValue(services);
 		if (value == null) {
-			throw new BuildException(
-					String.format(
-							"Wrong value for services attribute specified: %s. Allowed values are 'none', 'import' and 'export'.",
-							services));
+			throw new BuildException(String.format("Wrong value for services attribute specified: %s. Allowed values are 'none', 'import' and 'export'.",
+					services));
 		}
 	}
 
 	/**
 	 * Attribute getter.
+	 * 
 	 * @return name.
 	 */
 	public String getName() {
@@ -96,6 +111,7 @@ public class JBossModuleDependency {
 
 	/**
 	 * Attribute getter.
+	 * 
 	 * @return slot or null.
 	 */
 	public String getSlot() {
@@ -104,6 +120,7 @@ public class JBossModuleDependency {
 
 	/**
 	 * Attribute getter.
+	 * 
 	 * @return export or null.
 	 */
 	public Boolean getExport() {
@@ -112,6 +129,7 @@ public class JBossModuleDependency {
 
 	/**
 	 * Attribute getter.
+	 * 
 	 * @return optional or null.
 	 */
 	public Boolean getOptional() {
@@ -120,6 +138,7 @@ public class JBossModuleDependency {
 
 	/**
 	 * Attribute getter.
+	 * 
 	 * @return services or null.
 	 */
 	public Services getServices() {

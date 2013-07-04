@@ -1,5 +1,6 @@
 package com.osi.ant.types;
 
+import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import org.apache.tools.ant.types.FileSet;
 
 /**
  * JBoss module
+ * 
  * @author Simon Zambrovski
  * @author David Hosier
  */
@@ -29,15 +31,61 @@ public class JBossModule {
 
 	/**
 	 * (Ant) adds a dependency to a different module.
-	 * @param dependency module dependency.
+	 * 
+	 * @param dependency
+	 *            module dependency.
 	 */
 	public void addConfiguredDependency(final JBossModuleDependency dependency) {
 		dependencies.add(dependency);
 	}
 
 	/**
+	 * (Ant) adds a dependency to a different module.
+	 * 
+	 * @param dependency
+	 *            module dependency.
+	 */
+	public void addConfiguredDependencies(final JBossModuleDependenciesFromList dependenciesFromList) {
+		final List<JBossModuleDependency> parsedDependencies = parseDependencies(dependenciesFromList.getModuleList(), dependenciesFromList.getSeparator());
+
+		dependencies.addAll(parsedDependencies);
+	}
+
+	/**
+	 * Scans the separator-concatenated string of paths to modules.
+	 * 
+	 * @param moduleList
+	 *            input string.
+	 * @param separator
+	 *            separator.
+	 * @return list of JBossDependencies
+	 */
+	public static List<JBossModuleDependency> parseDependencies(final String moduleList, String separator) {
+		if (separator == null) {
+			separator = File.pathSeparator;
+		}
+
+		final String fsRegex = "\\".equals(File.separator) ? "\\\\" : File.separator;
+
+		final String[] modules = moduleList.split(separator);
+		final List<JBossModuleDependency> dependencies = new ArrayList<JBossModuleDependency>(modules.length);
+		for (String module : modules) {
+			final int lastSegmentStart = module.lastIndexOf(File.separatorChar);
+			if (lastSegmentStart > -1) {
+				final String moduleName = module.substring(0, lastSegmentStart).replaceAll(fsRegex, ".");
+				final String moduleSlot = module.substring(lastSegmentStart + 1);
+				System.out.println("Detected module: " + moduleName + ":" + moduleSlot);
+				dependencies.add(new JBossModuleDependency(moduleName, moduleSlot));
+			}
+		}
+		return dependencies;
+	}
+
+	/**
 	 * (Ant) adds a dependency to resources specified by this fileset.
-	 * @param filesetRef fileset with resources.
+	 * 
+	 * @param filesetRef
+	 *            fileset with resources.
 	 */
 	public void addConfiguredResourceFileSet(final FileSet filesetRef) {
 		includedFilesets.add(filesetRef);
@@ -63,11 +111,13 @@ public class JBossModule {
 
 	/**
 	 * Retrieves true, if the local attribute dir is used.
+	 * 
 	 * @return true if fileset embedded.
 	 */
 
 	/**
 	 * Returns module name property.
+	 * 
 	 * @return module name
 	 */
 	public String getName() {
@@ -76,6 +126,7 @@ public class JBossModule {
 
 	/**
 	 * Returns slot name or main, if no slot provided.
+	 * 
 	 * @return slot name.
 	 */
 	public String getSlot() {
@@ -84,7 +135,9 @@ public class JBossModule {
 
 	/**
 	 * Sets name.
-	 * @param name name to set.
+	 * 
+	 * @param name
+	 *            name to set.
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -92,7 +145,9 @@ public class JBossModule {
 
 	/**
 	 * Sets slot name.
-	 * @param slot slot.
+	 * 
+	 * @param slot
+	 *            slot.
 	 */
 	public void setSlot(String slot) {
 		if (!"".equals(slot)) {
@@ -102,6 +157,7 @@ public class JBossModule {
 
 	/**
 	 * Retrieves directory scanners for all configures filesets.
+	 * 
 	 * @return directory scanners.
 	 */
 	public Set<DirectoryScanner> getDirectoryScanners() {
@@ -116,6 +172,7 @@ public class JBossModule {
 
 	/**
 	 * Returns true, if the slot is a main slot.
+	 * 
 	 * @return true if slot is main, false otherwise.
 	 */
 	public boolean isMainSlot() {

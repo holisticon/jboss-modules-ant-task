@@ -24,11 +24,13 @@
 	<target name="generate-modules" depends="clean">
 
 		<ivy:info property="this" file="ivy.xml" />
-		<ivy:retrieve file="ivy.xml" pattern="target/lib/[artifact]-[revision](-[classifier]).[ext]" type="jar" setid="ivy.build.set" />
-
-		<modules todir="${target-dir}" overwrite="true">
+		<ivy:retrieve conf="resource" pattern="target/lib/resources/[artifact]-[revision](-[classifier]).[ext]" type="jar" setid="ivy.resources" />
+		<ivy:retrieve conf="module" pattern="target/lib/modules/[artifact]-[revision](-[classifier]).[ext]" setid="ivy.modules" />
+		
+		<ivy:report todir="target/ivy" />
+		<modules todir="${target-dir}" overwrite="true" createMainSlot="false">
 			<module name="${this.organisation}.${this.module}" slot="${this.revision}">
-				<resourceFileSet refid="ivy.build.set" />
+				<resourceFileSet refid="ivy.resources" />
 				<dependency name="com.osi.bar" export="true" optional="true" />
 			</module>
 		</modules>

@@ -1,0 +1,78 @@
+<project name="examples/simple-extern" default="generate-modules">
+
+	<!-- Define task -->
+	<taskdef resource="com/osi/antlib.xml" />
+	<!-- Own location -->
+	<dirname property="filedir" file="${ant.file.examples/simple-extern}" />
+	<!-- Where to get JARs from -->
+	<property name="repository" value="${user.home}${file.separator}.ivy2${file.separator}cache" />
+	<!-- Where to write modules -->
+	<property name="target-dir" value="${filedir}${file.separator}target${file.separator}modules" />
+
+	
+	<!-- 
+		Clean target dir
+	-->
+	<target name="clean">
+		<delete failonerror="false">
+			<fileset dir="${target-dir}">
+				<include name="**/*" />
+				<include name="**/*.*" />
+			</fileset>
+		</delete>
+	</target>
+
+	<!-- 
+		Generate module structure, as usually found in jboss-home/modules 
+	-->
+	<target name="prepare-modules" depends="clean">
+		
+		<!-- Generate module with resources -->
+		<fileset dir="${repository}/commons-io/commons-io/jars" id="testResourceSet">
+			<include name="*.jar" />
+		</fileset>
+
+		<modules todir="${target-dir}" overwrite="true" createMainSlot="true">
+			<module name="de.holisticon.simple" slot="1.0">
+				<resourceFileSet refid="testResourceSet" />
+			</module>
+			<module name="de.holisticon.other">
+				<dependency name="de.holisticon.simple" slot="1.0" export="true" optional="true" />
+			</module>			
+		</modules>
+		<echo message="Generation complete. Source modules stored in ${target-dir}" />
+	</target>
+	
+	
+	
+	<!-- 
+		Generate modules scanning exsiting modules.
+	-->
+	<target name="generate-modules" depends="prepare-modules">
+
+		<!-- Module with dependencies -->
+		<property name="moduleNameDep" value="de.holisticon.dependent" />
+		
+		
+		<!-- read the module structure and include all main modules -->
+		<echo message="Searching for modules in : ${target-dir}" />
+		<fileset dir="${target-dir}" id="foundModules"> 
+			<include name="**/main/module.xml" />
+		</fileset>
+
+			<!-- convert to path -->
+		<pathconvert property="foundModulesAsRelativePath" refid="foundModules" pathsep=";">
+			<chainedmapper>
+				<mapper type ="glob" from="${target-dir}\*" to="*" />
+				<mapper type ="glob" from="*\module.xml" to="*" />
+			</chainedmapper>
+		</pathconvert>
+
+		<!-- generate -->
+		<modules todir="${target-dir}" overwrite="true" createMainSlot="true">
+			<module name="${moduleNameDep}">
+				<dependencies moduleList="${foundModulesAsRelativePath}" separator=";" />
+			</module>
+		</modules>
+	</target>
+</project>
