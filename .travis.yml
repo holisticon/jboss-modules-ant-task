@@ -2,6 +2,3 @@ language: java
 script: ant build
 jdk:
   - oraclejdk7
-branches:
-  only:
-    - 1.0
