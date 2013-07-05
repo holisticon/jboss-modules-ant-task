@@ -1,4 +1,4 @@
 target
 examples/ivy/target/*
 examples/simple/target/*
-
+target/ivy/*

@@ -6,13 +6,24 @@
 	<property name="jar.name" value="jboss-modules-ant-tasks.jar" />
 	<property name="debug" value="false" />
 	<property name="fork.javac" value="false" />
-
+	<property name="ivy.jar.dir" value="target/ivy" />
+	
 	<!--
 	Resolves depenendecies.
 	-->
 	<target name="prepare">
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${ivy.jar.dir}"/>
+		<!-- download Ivy from web site so that it can be used even without any special installation -->
+		<get src="http://repo2.maven.org/maven2/org/apache/ivy/ivy/2.3.0/ivy-2.3.0.jar" 
+		             dest="${ivy.jar.dir}/ivy.jar" usetimestamp="true"/>
+
+        <path id="ivy.lib.path">
+            <fileset dir="${ivy.jar.dir}" includes="*.jar"/>
+        </path>
+		
+        <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path" />
 		<ivy:resolve />
 		<ivy:cachepath pathid="ivy.build.path" />
 	</target>
