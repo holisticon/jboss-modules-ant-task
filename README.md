@@ -1,6 +1,6 @@
 # de.holisticon.toolbox:jboss-modules-ant-task
 [![Build Status](https://secure.travis-ci.org/holisticon/jboss-modules-ant-task.png)](https://travis-ci.org/holisticon/jboss-modules-ant-task)
-## Introduction
+
 JBoss Modules Ant Task
 ======================
 
