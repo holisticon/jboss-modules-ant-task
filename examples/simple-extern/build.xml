@@ -60,8 +60,8 @@
 			<include name="**/main/module.xml" />
 		</fileset>
 
-			<!-- convert to path -->
-		<pathconvert property="foundModulesAsRelativePath" refid="foundModules" pathsep=";">
+		<!-- convert to path -->
+		<pathconvert property="foundModulesAsRelativePath" refid="foundModules" pathsep="${path.separator}">
 			<chainedmapper>
 				<mapper type ="glob" from="${target-dir}\*" to="*" />
 				<mapper type ="glob" from="*\module.xml" to="*" />
@@ -71,7 +71,7 @@
 		<!-- generate -->
 		<modules todir="${target-dir}" overwrite="true" createMainSlot="true">
 			<module name="${moduleNameDep}">
-				<dependencies moduleList="${foundModulesAsRelativePath}" separator=";" />
+				<dependencies moduleList="${foundModulesAsRelativePath}" separator="${path.separator}" />
 			</module>
 		</modules>
 	</target>

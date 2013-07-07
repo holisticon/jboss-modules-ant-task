@@ -7,25 +7,33 @@
 	<property name="debug" value="false" />
 	<property name="fork.javac" value="false" />
 	<property name="ivy.jar.dir" value="target/ivy" />
-	
+
 	<!--
 	Resolves depenendecies.
 	-->
 	<target name="prepare">
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${classes.dir}" />
-		<mkdir dir="${ivy.jar.dir}"/>
+		<mkdir dir="${ivy.jar.dir}" />
 		<!-- download Ivy from web site so that it can be used even without any special installation -->
-		<get src="http://repo2.maven.org/maven2/org/apache/ivy/ivy/2.3.0/ivy-2.3.0.jar" 
-		             dest="${ivy.jar.dir}/ivy.jar" usetimestamp="true"/>
+		<get src="http://repo2.maven.org/maven2/org/apache/ivy/ivy/2.3.0/ivy-2.3.0.jar" dest="${ivy.jar.dir}/ivy.jar" usetimestamp="true" />
 
-        <path id="ivy.lib.path">
-            <fileset dir="${ivy.jar.dir}" includes="*.jar"/>
-        </path>
-		
-        <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path" />
+		<path id="ivy.lib.path">
+			<fileset dir="${ivy.jar.dir}" includes="*.jar" />
+		</path>
+		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path" />
+
 		<ivy:resolve />
 		<ivy:cachepath pathid="ivy.build.path" />
+
+		<property name="ivy.pom.name" value="jboss-modules-ant-task" />
+		<property name="ivy.pom.url" value="https://github.com/holisticon/${ivy.pom.name}" />
+		<property name="ivy.pom.description" value="The JBoss Modules Ant task provides an easy way to create one or more JBoss Modules modules via Ant without resorting to using copy tasks and versioning module.xml files." />
+		<loadfile property="ivy.pom.license" srcfile="LICENSE.txt" />
+
+		<ivy:makepom ivyfile="ivy.xml" pomfile="${build.dir}/pom.xml" templatefile="src/main/resources/pom.template">
+			<mapping conf="default" scope="compile" />
+		</ivy:makepom>
 	</target>
 
 	<!--
@@ -39,7 +47,7 @@
 		</javac>
 		<copy todir="${classes.dir}">
 			<fileset dir="${src.dir}">
-				<include name="**/antlib.xml"/>
+				<include name="**/antlib.xml" />
 			</fileset>
 		</copy>
 	</target>
@@ -59,4 +67,5 @@
 	<target name="deploy" depends="build">
 		<copy file="${build.dir}/${jar.name}" todir="${user.home}/.ant/lib" />
 	</target>
+
 </project>
