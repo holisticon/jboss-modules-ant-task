@@ -1,4 +1,4 @@
-package com.osi.ant.types;
+package de.holisticon.toolbox.ant.types;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,6 +6,9 @@ import java.io.File;
 import java.util.List;
 
 import org.junit.Test;
+
+import de.holisticon.toolbox.ant.types.JBossModule;
+import de.holisticon.toolbox.ant.types.JBossModuleDependency;
 
 /**
  * Test for JBoss Module.

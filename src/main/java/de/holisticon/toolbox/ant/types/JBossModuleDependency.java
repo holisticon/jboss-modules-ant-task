@@ -1,4 +1,4 @@
-package com.osi.ant.types;
+package de.holisticon.toolbox.ant.types;
 
 import org.apache.tools.ant.BuildException;
 

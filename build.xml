@@ -1,13 +1,32 @@
-<project name="jboss-modules-ant-task" default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="jboss-modules-ant-task" default="build" xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 
+	
 	<property name="build.dir" value="target/" />
 	<property name="classes.dir" value="target/classes" />
 	<property name="src.dir" value="src/main/java" />
-	<property name="jar.name" value="jboss-modules-ant-tasks.jar" />
+	<property name="javadoc.dir" value="target/javadoc" />
+	<property name="ivy.jar.dir" value="target/ivy" />
+	<property name="ivy.deliver.ivy.pattern" value="target/ivy.xml" />
 	<property name="debug" value="false" />
 	<property name="fork.javac" value="false" />
-	<property name="ivy.jar.dir" value="target/ivy" />
+	<property name="version" value="1.0.0" />
+	<property name="ivy.pom.version" value="${version}" />
+	
+	<property name="ivy.pom.name" value="jboss-modules-ant-task" />
+	<property name="ivy.pom.url" value="https://github.com/holisticon/${ivy.pom.name}" />
+	<property name="ivy.pom.description" value="The JBoss Modules Ant task provides an easy way to create one or more JBoss Modules modules via Ant without resorting to using copy tasks and versioning module.xml files." />
+	<loadfile property="ivy.pom.license" srcfile="LICENSE.txt" />
 
+	<property name="jar.name" value="${ivy.pom.name}-${version}.jar" />
+	<property name="sources.name" value="${ivy.pom.name}-${version}-sources.jar" />
+	<property name="javadoc.name" value="${ivy.pom.name}-${version}-javadoc.jar" />
+	
+    <!-- defined maven snapshots and staging repository id and url -->
+    <property name="maven-snapshots-repository-id" value="sonatype-nexus-snapshots" />
+    <property name="maven-snapshots-repository-url" value="https://oss.sonatype.org/content/repositories/snapshots" />
+    <property name="maven-staging-repository-id" value="sonatype-nexus-staging" />
+    <property name="maven-staging-repository-url" value="https://oss.sonatype.org/service/local/staging/deploy/maven2" />	
+	
 	<!--
 	Resolves depenendecies.
 	-->
@@ -17,23 +36,22 @@
 		<mkdir dir="${ivy.jar.dir}" />
 		<!-- download Ivy from web site so that it can be used even without any special installation -->
 		<get src="http://repo2.maven.org/maven2/org/apache/ivy/ivy/2.3.0/ivy-2.3.0.jar" dest="${ivy.jar.dir}/ivy.jar" usetimestamp="true" />
+		<get src="http://repo1.maven.org/maven2/org/apache/maven/maven-ant-tasks/2.1.3/maven-ant-tasks-2.1.3.jar" dest="${ivy.jar.dir}/maven-ant-tasks.jar" usetimestamp="true" />
 
 		<path id="ivy.lib.path">
-			<fileset dir="${ivy.jar.dir}" includes="*.jar" />
+			<fileset dir="${ivy.jar.dir}" includes="ivy.jar" />
 		</path>
+		<path id="maven.lib.path">
+			<fileset dir="${ivy.jar.dir}" includes="maven-ant-tasks.jar" />
+		</path>
+		
+		
 		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path" />
+		<taskdef resource="org/apache/maven/artifact/ant/antlib.xml" uri="antlib:org.apache.maven.artifact.ant" classpathref="maven.lib.path" />
 
 		<ivy:resolve />
 		<ivy:cachepath pathid="ivy.build.path" />
 
-		<property name="ivy.pom.name" value="jboss-modules-ant-task" />
-		<property name="ivy.pom.url" value="https://github.com/holisticon/${ivy.pom.name}" />
-		<property name="ivy.pom.description" value="The JBoss Modules Ant task provides an easy way to create one or more JBoss Modules modules via Ant without resorting to using copy tasks and versioning module.xml files." />
-		<loadfile property="ivy.pom.license" srcfile="LICENSE.txt" />
-
-		<ivy:makepom ivyfile="ivy.xml" pomfile="${build.dir}/pom.xml" templatefile="src/main/resources/pom.template">
-			<mapping conf="default" scope="compile" />
-		</ivy:makepom>
 	</target>
 
 	<!--
@@ -50,6 +68,12 @@
 				<include name="**/antlib.xml" />
 			</fileset>
 		</copy>
+		<javadoc destdir="${javadoc.dir}" author="true" version="true" use="true">
+			<packageset dir="${src.dir}" defaultexcludes="yes">
+				<include name="**" />
+			</packageset>
+		</javadoc>
+
 	</target>
 
 	<!--
@@ -57,15 +81,73 @@
 	-->
 	<target name="build" depends="compile">
 		<jar jarfile="${build.dir}/${jar.name}">
-			<fileset dir="${classes.dir}" includes="**" excludes="*.jar" />
+			<fileset dir="${classes.dir}" includes="**" />
 		</jar>
+		<jar jarfile="${build.dir}/${sources.name}">
+			<fileset dir="${src.dir}" includes="**" />
+		</jar>
+		<jar jarfile="${build.dir}/${javadoc.name}">
+			<fileset dir="${javadoc.dir}" includes="**" />
+		</jar>
+
+		
+		<ivy:deliver pubrevision="${revision}" status="release" />
+		<ivy:makepom ivyfile="ivy.xml" pomfile="${build.dir}/pom.xml" templatefile="src/main/resources/pom.template" printivyinfo="true">
+			<mapping conf="default" scope="compile" />
+		</ivy:makepom>
 	</target>
 
 	<!-- 
 	Deploys the JAR to default location where Ant looks for it.
 	-->
-	<target name="deploy" depends="build">
+	<target name="deploy-local" depends="build">
 		<copy file="${build.dir}/${jar.name}" todir="${user.home}/.ant/lib" />
+	</target>
+	
+	<!-- deploy snapshot -->
+    <target name="deploy-as-snapshot" depends="build" description="deploy snapshot version to Maven snapshot repository">
+		<artifact:mvn>
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-Durl=${maven-snapshots-repository-url}" />
+			<arg value="-DrepositoryId=${maven-snapshots-repository-id}" />
+			<arg value="-DpomFile=${build.dir}/pom.xml" />
+			<arg value="-Dfile=${build.dir}/${jar.name}" />
+		</artifact:mvn>
+    </target>
+
+    <!-- deploys a release -->
+	<target name="deploy-as-release" depends="build" description="deploy release version to Maven staging repository">
+		<!-- sign and deploy the main artifact -->
+		<artifact:mvn>
+			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+			<arg value="-Durl=${maven-staging-repository-url}" />
+			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
+			<arg value="-DpomFile=${build.dir}/pom.xml" />
+			<arg value="-Dfile=${build.dir}/${jar.name}" />
+            <arg value="-Pgpg" />
+		</artifact:mvn>
+
+		<!-- sign and deploy the sources artifact -->
+		<artifact:mvn>
+			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+			<arg value="-Durl=${maven-staging-repository-url}" />
+			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
+			<arg value="-DpomFile=${build.dir}/pom.xml" />
+			<arg value="-Dfile=${build.dir}/${sources.name}" />
+			<arg value="-Dclassifier=sources" />
+            <arg value="-Pgpg" />
+		</artifact:mvn>
+
+		<!-- sign and deploy the javadoc artifact -->
+		<artifact:mvn>
+			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+			<arg value="-Durl=${maven-staging-repository-url}" />
+			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
+			<arg value="-DpomFile=${build.dir}/pom.xml" />
+			<arg value="-Dfile=${build.dir}/${javadoc.name}" />
+			<arg value="-Dclassifier=javadoc" />
+            <arg value="-Pgpg" />
+		</artifact:mvn>
 	</target>
 
 </project>

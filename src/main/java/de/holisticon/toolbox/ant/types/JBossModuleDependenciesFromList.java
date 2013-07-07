@@ -1,4 +1,4 @@
-package com.osi.ant.types;
+package de.holisticon.toolbox.ant.types;
 
 /**
  * Represents a list of module dependencies on another modules.

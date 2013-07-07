@@ -2,22 +2,23 @@ ${ivy.pom.header}
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
   
-  <groupId>${ivy.pom.groupId}</groupId>
-  <artifactId>${ivy.pom.artifactId}</artifactId>
-  <version>${ivy.pom.version}</version>
-  <packaging>${ivy.pom.packaging}</packaging>
+    <groupId>${ivy.pom.groupId}</groupId>
+    <artifactId>${ivy.pom.artifactId}</artifactId>
+    <version>${ivy.pom.version}</version>
+    <packaging>${ivy.pom.packaging}</packaging>
   
   
-  <parent>
+    <parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
 		<version>7</version>
-  </parent>
+    </parent>
 	
-  <description>${ivy.pom.description}</description>
-  <url>${ivy.pom.url}</url>
+    <description>${ivy.pom.description}</description>
+    <url>${ivy.pom.url}</url>
+    <name>${ivy.pom.name}</name>
 
 	<organization>
 		<name>Holisticon AG</name>
@@ -61,5 +62,9 @@ ${ivy.pom.header}
 		<developerConnection>scm:git:${ivy.pom.url}.git</developerConnection>
 		<url>scm:git:${ivy.pom.url}.git</url>
 		<tag>HEAD</tag>
-	</scm>	
+	</scm>
+	<ciManagement>
+ 		<system>Travis</system>
+ 		<url>https://travis-ci.org/holisticon/${ivy.pom.name}</url>
+ 	</ciManagement>
 </project>

@@ -1,0 +1,3 @@
+<antlib>
+	<taskdef name="modules" classname="de.holisticon.toolbox.ant.tasks.CreateModulesTask" />
+</antlib>

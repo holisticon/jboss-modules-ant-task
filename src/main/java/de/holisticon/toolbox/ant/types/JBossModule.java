@@ -1,4 +1,4 @@
-package com.osi.ant.types;
+package de.holisticon.toolbox.ant.types;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -42,7 +42,7 @@ public class JBossModule {
 	/**
 	 * (Ant) adds a dependency to a different module.
 	 * 
-	 * @param dependency
+	 * @param dependenciesFromList
 	 *            module dependency.
 	 */
 	public void addConfiguredDependencies(final JBossModuleDependenciesFromList dependenciesFromList) {

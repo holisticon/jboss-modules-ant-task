@@ -1,3 +1,0 @@
-<antlib>
-	<taskdef name="modules" classname="com.osi.ant.tasks.CreateModulesTask" />
-</antlib>

@@ -1,4 +1,4 @@
-package com.osi.ant.tasks;
+package de.holisticon.toolbox.ant.tasks;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,7 +14,7 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.util.FileUtils;
 
-import com.osi.ant.types.JBossModule;
+import de.holisticon.toolbox.ant.types.JBossModule;
 
 /**
  * Ant task to create JBoss Modules.

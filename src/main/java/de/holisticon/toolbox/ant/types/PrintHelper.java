@@ -1,4 +1,4 @@
-package com.osi.ant.types;
+package de.holisticon.toolbox.ant.types;
 
 import java.io.PrintStream;
 import java.util.List;
@@ -64,8 +64,7 @@ public final class PrintHelper {
 
 	/**
 	 * Prints dependencies info.
-	 * @param ps print stream to print on.
-	 * @param files list of dependencies to print.
+	 * @param dependencies list of dependencies to print.
 	 */
 	public final void printModuleDepenendencies(final List<JBossModuleDependency> dependencies) {
 		if (!dependencies.isEmpty()) {
@@ -92,7 +91,6 @@ public final class PrintHelper {
 
 	/**
 	 * Prints resources info.
-	 * @param ps print stream to print on.
 	 * @param files list of file paths to print.
 	 */
 	public final void printModuleResources(final List<String> files) {

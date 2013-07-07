@@ -57,4 +57,4 @@ Installation and Usage
 ----------------------
 The easiest way to install is to drop the file into ~/.ant/lib. To use the task in your build files, use the following taskdef:
 
-`<taskdef resource="com/osi/antlib.xml" />`
+`<taskdef resource="de/holisticon/toolbox/ant/antlib.xml" />`
