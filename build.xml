@@ -112,6 +112,8 @@
 			<arg value="-DrepositoryId=${maven-snapshots-repository-id}" />
 			<arg value="-DpomFile=${build.dir}/pom.xml" />
 			<arg value="-Dfile=${build.dir}/${jar.name}" />
+            <arg value="-Pgpg" />
+			<arg value="-e" />	
 		</artifact:mvn>
     </target>
 
@@ -125,6 +127,7 @@
 			<arg value="-DpomFile=${build.dir}/pom.xml" />
 			<arg value="-Dfile=${build.dir}/${jar.name}" />
             <arg value="-Pgpg" />
+			<arg value="-e" />			
 		</artifact:mvn>
 
 		<!-- sign and deploy the sources artifact -->
