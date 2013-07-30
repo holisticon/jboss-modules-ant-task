@@ -27,8 +27,9 @@
     <property name="maven-staging-repository-id" value="sonatype-nexus-staging" />
     <property name="maven-staging-repository-url" value="https://oss.sonatype.org/service/local/staging/deploy/maven2" />	
 	
-	
-	<property name="mvn.home" value="/opt/jenkins/tools/Maven/Maven_3.0.4" />
+
+	<property environment="env" />
+	<property name="mvn.home" value="${env.MVN_HOME}" />
 	
 	<!--
 	Resolves depenendecies.
@@ -117,14 +118,13 @@
 			<arg value="-Dfile=${build.dir}/${jar.name}" />
             <arg value="-Pgpg" />
 			<arg value="-e" />	
-			<arg value="-X" />	
 		</artifact:mvn>
     </target>
 
     <!-- deploys a release -->
 	<target name="deploy-as-release" depends="build" description="deploy release version to Maven staging repository">
 		<!-- sign and deploy the main artifact -->
-		<artifact:mvn mavenhome="${mvn.home}">
+		<artifact:mvn mavenhome="${mvn.home}" >
 			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
 			<arg value="-Durl=${maven-staging-repository-url}" />
 			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
@@ -132,7 +132,6 @@
 			<arg value="-Dfile=${build.dir}/${jar.name}" />
             <arg value="-Pgpg" />
 			<arg value="-e" />			
-			<arg value="-X" />	
 		</artifact:mvn>
 
 		<!-- sign and deploy the sources artifact -->
