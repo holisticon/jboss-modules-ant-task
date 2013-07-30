@@ -114,6 +114,7 @@
 			<arg value="-Dfile=${build.dir}/${jar.name}" />
             <arg value="-Pgpg" />
 			<arg value="-e" />	
+			<arg value="-X" />	
 		</artifact:mvn>
     </target>
 
@@ -128,6 +129,7 @@
 			<arg value="-Dfile=${build.dir}/${jar.name}" />
             <arg value="-Pgpg" />
 			<arg value="-e" />			
+			<arg value="-X" />	
 		</artifact:mvn>
 
 		<!-- sign and deploy the sources artifact -->
