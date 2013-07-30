@@ -28,9 +28,6 @@
     <property name="maven-staging-repository-url" value="https://oss.sonatype.org/service/local/staging/deploy/maven2" />	
 	
 
-	<property environment="env" />
-	<property name="mvn.home" value="${env.MVN_HOME}" />
-	
 	<!--
 	Resolves depenendecies.
 	-->
