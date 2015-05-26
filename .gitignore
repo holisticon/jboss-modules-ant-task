@@ -1,4 +1,6 @@
 target
 examples/ivy/target/*
 examples/simple/target/*
-target/ivy/*
+.classpath
+.project
+.settings
