@@ -14,7 +14,6 @@ import de.holisticon.toolbox.ant.types.JBossModuleDependency;
  * Test for JBoss Module.
  * 
  * @author Simon Zambrovski
- * 
  */
 public class JBossModuleTest {
 
