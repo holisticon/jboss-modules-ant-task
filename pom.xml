@@ -20,27 +20,24 @@
     <description>The JBoss Modules Ant task provides an easy way to create one or more JBoss Modules modules via Ant without resorting to using copy tasks and versioning module.xml files.</description>
     <url>https://github.com/holisticon/jboss-modules-ant-task</url>
     <name>jboss-modules-ant-task</name>
-
 	<organization>
 		<name>Holisticon AG</name>
 		<url>http://www.holisticon.de/</url>
 	</organization>
-
 	<developers>
 		<developer>
 			<name>Simon Zambrovski</name>
 			<email>simon.zambrovski@holisticon.de</email>
 			<organization>holisticon AG</organization>
-			<organizationUrl>http://holisticon.de/</organizationUrl>
+			<organizationUrl>https://www.holisticon.de/</organizationUrl>
 		</developer>
 		<developer>
 			<name>Jan Galinski</name>
 			<email>jan.galinski@holisticon.de</email>
 			<organization>holisticon AG</organization>
-			<organizationUrl>http://holisticon.de/</organizationUrl>
+			<organizationUrl>https://www.holisticon.de/</organizationUrl>
 		</developer>
 	</developers>
-
 	<licenses>
 		<license>
 			<name>Revised BSD License</name>
@@ -79,10 +76,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</comments>
 		<system>GitHub Issues</system>
 	</issueManagement>
 	<scm>
-		<connection>scm:git:https://github.com/holisticon/jboss-modules-ant-task.git</connection>
-		<developerConnection>scm:git:https://github.com/holisticon/jboss-modules-ant-task.git</developerConnection>
-		<url>scm:git:https://github.com/holisticon/jboss-modules-ant-task.git</url>
-		<tag>HEAD</tag>
+		<connection>scm:git:git@github.com:holisticon/jboss-modules-ant-task.git</connection>
+		<developerConnection>scm:git:git@github.com:holisticon/jboss-modules-ant-task.git</developerConnection>
+		<url>scm:git:git@github.com:holisticon/jboss-modules-ant-task.git</url>
+		<tag>1.1</tag>
 	</scm>
 	<ciManagement>
  		<system>Travis</system>
