@@ -113,7 +113,9 @@
 			<arg value="-DrepositoryId=${maven-snapshots-repository-id}" />
 			<arg value="-DpomFile=${build.dir}/pom.xml" />
 			<arg value="-Dfile=${build.dir}/${jar.name}" />
+			<!--
             <arg value="-Pgpg" />
+			-->
 			<arg value="-e" />	
 		</artifact:mvn>
     </target>
@@ -127,7 +129,9 @@
 			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
 			<arg value="-DpomFile=${build.dir}/pom.xml" />
 			<arg value="-Dfile=${build.dir}/${jar.name}" />
+			<!--
             <arg value="-Pgpg" />
+			-->
 			<arg value="-e" />			
 		</artifact:mvn>
 
@@ -139,7 +143,9 @@
 			<arg value="-DpomFile=${build.dir}/pom.xml" />
 			<arg value="-Dfile=${build.dir}/${sources.name}" />
 			<arg value="-Dclassifier=sources" />
+			<!--
             <arg value="-Pgpg" />
+			-->
 		</artifact:mvn>
 
 		<!-- sign and deploy the javadoc artifact -->
@@ -150,7 +156,9 @@
 			<arg value="-DpomFile=${build.dir}/pom.xml" />
 			<arg value="-Dfile=${build.dir}/${javadoc.name}" />
 			<arg value="-Dclassifier=javadoc" />
+			<!--
             <arg value="-Pgpg" />
+			-->
 		</artifact:mvn>
 	</target>
 
