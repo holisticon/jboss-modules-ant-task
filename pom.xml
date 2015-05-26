@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>  
     <groupId>de.holisticon.toolbox</groupId>
     <artifactId>jboss-modules-ant-task</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.1.1</version>
     <packaging>jar</packaging>
     <parent>
 		<groupId>de.holisticon.maven</groupId>
@@ -78,7 +78,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</comments>
 		<connection>scm:git:git@github.com:holisticon/jboss-modules-ant-task.git</connection>
 		<developerConnection>scm:git:git@github.com:holisticon/jboss-modules-ant-task.git</developerConnection>
 		<url>scm:git:git@github.com:holisticon/jboss-modules-ant-task.git</url>
-		<tag>1.1</tag>
+		<tag>jboss-modules-ant-task-1.1.1</tag>
 	</scm>
 	<ciManagement>
  		<system>Travis</system>
