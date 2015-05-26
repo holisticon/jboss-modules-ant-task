@@ -20,7 +20,7 @@ public class JBossModuleTest {
 
 	@Test
 	public void shouldParseModuleString() {
-		String moduleList = "de\\holisticon\\other\\main;de\\holisticon\\simple\\1.0;de\\holisticon\\simple\\main";
+		String moduleList = "de" + File.separator + "holisticon" + File.separator + "other" + File.separator + "main" + File.pathSeparator + "de" + File.separator + "holisticon" + File.separator + "simple" + File.separator + "1.0" +File.pathSeparator + "de" + File.separator + "holisticon" + File.separator + "simple"+ File.separator + "main";
 		List<JBossModuleDependency> parseDependencies = JBossModule.parseDependencies(moduleList, File.pathSeparator);
 		assertEquals(3, parseDependencies.size());
 	}
