@@ -94,7 +94,7 @@ public final class PrintHelper {
         if (!files.isEmpty()) {
             ps.println("\t<resources>");
             for (String file : files) {
-                if (file != null && !file.contains(File.pathSeparator)) {
+                if (file != null && !file.contains(File.separator)) {
                     // We will not add resources if they are in a subdirectory.
                     ps.println(String.format("\t\t<resource-root path=\"%s\" />", file));
                 }
