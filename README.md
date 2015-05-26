@@ -1,7 +1,6 @@
 # de.holisticon.toolbox:jboss-modules-ant-task
 [![Build Status](https://secure.travis-ci.org/holisticon/jboss-modules-ant-task.png)](https://travis-ci.org/holisticon/jboss-modules-ant-task)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.holisticon.toolbox/jboss-modules-ant-task/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.holisticon.toolbox/jboss-modules-ant-task)
-[![Coverage Status](https://coveralls.io/repos/holisticon/jboss-modules-ant-task/badge.svg)](https://coveralls.io/r/holisticon/jboss-modules-ant-task)
 
 JBoss Modules Ant Task
 ======================
