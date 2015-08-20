@@ -78,7 +78,7 @@ public final class PrintHelper {
                     ps.print(String.format("optional=\"%s\" ", dependency.getOptional()));
                 }
                 if (dependency.getServices() != null) {
-                    ps.print(String.format("services=\"%s\" ", dependency.getServices()));
+                    ps.print(String.format("services=\"%s\" ", dependency.getServices().getValue()));
                 }
                 ps.println("/>");
             }
