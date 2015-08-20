@@ -98,6 +98,7 @@ public class JBossModuleDependency {
 			throw new BuildException(String.format("Wrong value for services attribute specified: %s. Allowed values are 'none', 'import' and 'export'.",
 					services));
 		}
+        this.services = value;
 	}
 
 	/**
