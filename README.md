@@ -6,7 +6,7 @@ JBoss Modules Ant Task
 ======================
 
 The JBoss Modules Ant task provides an easy way to create one or more JBoss Modules modules via Ant without resorting to using copy tasks and 
-versioning module.xml files. See [this blog post](http://relation.to/16904.lace) for more information about JBoss Modules.
+versioning module.xml files. See [this blog post](http://in.relation.to/2010/09/10/modularized-java-withjboss-modules/) for more information about JBoss Modules.
 
 Information
 -----------
